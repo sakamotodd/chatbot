@@ -1,0 +1,35 @@
+// Card API constants
+export const CARD_CONSTANTS = {
+  // Validation limits
+  MAX_TITLE_LENGTH: 100,
+  MAX_SUBTITLE_LENGTH: 200,
+  MAX_IMAGE_URL_LENGTH: 500,
+  MAX_URL_LENGTH: 500,
+  MAX_STEP_ORDER: 999,
+
+  // Pagination defaults
+  DEFAULT_PAGE_SIZE: 10,
+  MAX_PAGE_SIZE: 100,
+  MIN_PAGE_SIZE: 1,
+
+  // Error codes
+  ERROR_CODES: {
+    VALIDATION_ERROR: 'VALIDATION_ERROR',
+    CARD_NOT_FOUND: 'CARD_NOT_FOUND',
+    MESSAGE_NOT_FOUND: 'MESSAGE_NOT_FOUND',
+    DUPLICATE_STEP_ORDER: 'DUPLICATE_STEP_ORDER',
+    UNAUTHORIZED: 'UNAUTHORIZED',
+    FORBIDDEN: 'FORBIDDEN',
+    RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
+    INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  },
+
+  // Success messages
+  MESSAGES: {
+    CARD_CREATED: 'カードが正常に作成されました',
+    CARD_UPDATED: 'カードが正常に更新されました',
+    CARD_DELETED: 'カードが正常に削除されました',
+    CARDS_RETRIEVED: 'カード一覧を取得しました',
+    CARD_RETRIEVED: 'カード詳細を取得しました',
+  },
+};

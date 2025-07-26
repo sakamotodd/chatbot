@@ -12,15 +12,22 @@ import { errorHandler, notFoundHandler } from './middleware/error_middleware';
 
 // Router imports
 import campaignRoutes from './api/campaigns';
-// import prizeRoutes from './api/in_instantwin_prizes';
-// import templateRoutes from './api/in_instantwin_templates';
-// import conversationRoutes from './api/in_instantwin_conversations';
-// import nodeRoutes from './api/in_instantwin_nodes';
-// import messageRoutes from './api/in_instantwin_messages';
-// import flowRoutes from './api/flow';
+import prizeRoutes from './api/in_instantwin_prizes';
+import templateRoutes from './api/in_instantwin_templates';
+import nodeRoutes from './api/in_instantwin_nodes';
+import edgeRoutes from './api/in_instantwin_edges';
+import flowRoutes from './api/flow';
+import messageRoutes from './api/in_instantwin_messages';
+import selectOptionRoutes from './api/in_instantwin_select_options';
+import cardRoutes from './api/in_instantwin_cards';
+import buttonRoutes from './api/in_instantwin_buttons';
+import conversationRoutes from './api/in_instantwin_conversations';
+import websocketRoutes from './api/websocket';
+import lotteryRoutes from './api/lottery';
 
 // Utils
 import logger from './utils/logger';
+import { WebSocketService } from './services/websocket_service';
 
 const app = express();
 const server = createServer(app);
@@ -80,31 +87,21 @@ app.use('/api', (req, res, next) => {
 
 // API route handlers
 app.use('/api/campaigns', campaignRoutes);
-// app.use('/api/prizes', prizeRoutes);
-// app.use('/api/templates', templateRoutes);
-// app.use('/api/conversations', conversationRoutes);
-// app.use('/api/nodes', nodeRoutes);
-// app.use('/api/messages', messageRoutes);
-// app.use('/api/flow', flowRoutes);
+app.use('/api', prizeRoutes);
+app.use('/api', templateRoutes);
+app.use('/api', nodeRoutes);
+app.use('/api', edgeRoutes);
+app.use('/api', flowRoutes);
+app.use('/api', messageRoutes);
+app.use('/api', selectOptionRoutes);
+app.use('/api', cardRoutes);
+app.use('/api', buttonRoutes);
+app.use('/api', conversationRoutes);
+app.use('/api', websocketRoutes);
+app.use('/api', lotteryRoutes);
 
-// WebSocket connection handling
-io.on('connection', socket => {
-  logger.info(`WebSocket client connected: ${socket.id}`);
-
-  socket.on('join-conversation', (conversationId: string) => {
-    socket.join(`conversation-${conversationId}`);
-    logger.info(`Client ${socket.id} joined conversation ${conversationId}`);
-  });
-
-  socket.on('leave-conversation', (conversationId: string) => {
-    socket.leave(`conversation-${conversationId}`);
-    logger.info(`Client ${socket.id} left conversation ${conversationId}`);
-  });
-
-  socket.on('disconnect', () => {
-    logger.info(`WebSocket client disconnected: ${socket.id}`);
-  });
-});
+// Initialize WebSocket service
+WebSocketService.initialize(io);
 
 // 404 handler
 app.use(notFoundHandler);

@@ -1,0 +1,33 @@
+// Edge API constants
+export const EDGE_CONSTANTS = {
+  // Validation limits
+  MAX_CONDITION_LENGTH: 1000,
+
+  // Pagination defaults
+  DEFAULT_PAGE_SIZE: 10,
+  MAX_PAGE_SIZE: 100,
+  MIN_PAGE_SIZE: 1,
+
+  // Error codes
+  ERROR_CODES: {
+    VALIDATION_ERROR: 'VALIDATION_ERROR',
+    EDGE_NOT_FOUND: 'EDGE_NOT_FOUND',
+    NODE_NOT_FOUND: 'NODE_NOT_FOUND',
+    TEMPLATE_NOT_FOUND: 'TEMPLATE_NOT_FOUND',
+    PRIZE_NOT_FOUND: 'PRIZE_NOT_FOUND',
+    CIRCULAR_REFERENCE: 'CIRCULAR_REFERENCE',
+    UNAUTHORIZED: 'UNAUTHORIZED',
+    FORBIDDEN: 'FORBIDDEN',
+    RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
+    INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  },
+
+  // Success messages
+  MESSAGES: {
+    EDGE_CREATED: 'エッジが正常に作成されました',
+    EDGE_UPDATED: 'エッジが正常に更新されました',
+    EDGE_DELETED: 'エッジが正常に削除されました',
+    EDGES_RETRIEVED: 'エッジ一覧を取得しました',
+    EDGE_RETRIEVED: 'エッジ詳細を取得しました',
+  },
+};

@@ -1,0 +1,41 @@
+// Conversation API constants
+export const CONVERSATION_CONSTANTS = {
+  // Validation limits
+  MAX_USER_ID_LENGTH: 100,
+
+  // Pagination defaults
+  DEFAULT_PAGE_SIZE: 10,
+  MAX_PAGE_SIZE: 100,
+  MIN_PAGE_SIZE: 1,
+
+  // Conversation status (matching ConversationStatus enum)
+  CONVERSATION_STATUS: {
+    ACTIVE: 0,
+    COMPLETED: 1,
+    ABANDONED: 2,
+    ERROR: 3,
+  },
+
+  // Error codes
+  ERROR_CODES: {
+    VALIDATION_ERROR: 'VALIDATION_ERROR',
+    CONVERSATION_NOT_FOUND: 'CONVERSATION_NOT_FOUND',
+    TEMPLATE_NOT_FOUND: 'TEMPLATE_NOT_FOUND',
+    NODE_NOT_FOUND: 'NODE_NOT_FOUND',
+    CONVERSATION_ALREADY_ENDED: 'CONVERSATION_ALREADY_ENDED',
+    UNAUTHORIZED: 'UNAUTHORIZED',
+    FORBIDDEN: 'FORBIDDEN',
+    RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
+    INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  },
+
+  // Success messages
+  MESSAGES: {
+    CONVERSATION_CREATED: '会話が正常に作成されました',
+    CONVERSATION_UPDATED: '会話が正常に更新されました',
+    CONVERSATION_DELETED: '会話が正常に削除されました',
+    CONVERSATIONS_RETRIEVED: '会話一覧を取得しました',
+    CONVERSATION_RETRIEVED: '会話詳細を取得しました',
+    CONVERSATION_ENDED: '会話が正常に終了されました',
+  },
+};

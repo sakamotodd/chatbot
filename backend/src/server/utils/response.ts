@@ -83,7 +83,7 @@ export class ResponseHelper {
   static badRequest(
     res: Response,
     message?: string,
-    error?: string
+    error?: any
   ): Response<ApiResponse> {
     return res.status(400).json({
       success: false,
@@ -106,17 +106,19 @@ export class ResponseHelper {
     });
   }
 
-  static notFound(res: Response, message?: string): Response<ApiResponse> {
+  static notFound(res: Response, message?: string, code?: string): Response<ApiResponse> {
     return res.status(404).json({
       success: false,
       message: message || 'リソースが見つかりません',
+      error: code ? { code } : undefined,
     });
   }
 
-  static conflict(res: Response, message?: string): Response<ApiResponse> {
+  static conflict(res: Response, message?: string, error?: any): Response<ApiResponse> {
     return res.status(409).json({
       success: false,
       message: message || 'リソースが競合しています',
+      error,
     });
   }
 
