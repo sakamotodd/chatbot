@@ -1,0 +1,12 @@
+node_modules
+backend/dist
+backend/logs
+frontend/dist
+frontend/.vite
+frontend/.next
+frontend/.nuxt
+frontend/.cache
+frontend/.temp
+frontend/.docusaurus
+frontend/.serverless
+frontend/.fusebox
