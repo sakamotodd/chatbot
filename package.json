@@ -1,0 +1,42 @@
+{
+  "name": "instagram-crm",
+  "version": "1.0.0",
+  "description": "Instagram チャットBOT専用 CRMツール",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "install": "yarn install-all",
+    "install-all": "cd backend && yarn install && cd ../frontend && yarn install",
+    "start": "concurrently \"yarn start:backend\" \"yarn start:frontend\"",
+    "start:backend": "cd backend && yarn start",
+    "start:frontend": "cd frontend && yarn dev",
+    "dev": "concurrently \"yarn dev:backend\" \"yarn dev:frontend\"",
+    "dev:backend": "cd backend && yarn dev",
+    "dev:frontend": "cd frontend && yarn dev",
+    "build": "cd frontend && yarn build",
+    "test": "cd backend && yarn test",
+    "lint": "cd frontend && yarn lint",
+    "clean": "rm -rf node_modules backend/node_modules frontend/node_modules"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "keywords": [
+    "instagram",
+    "crm",
+    "chatbot",
+    "vue",
+    "express",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "yarn": ">=1.22.0"
+  }
+}
