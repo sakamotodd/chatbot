@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinConversationService } from '../../services/in_instantwin_conversation_service';
 import { ConversationValidator } from './utils/conversation_validator';
 import { CONVERSATION_CONSTANTS } from './utils/conversation_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { ConversationDetailResponse } from './types/conversation_response';
 
 export const putEndConversationApi = async (req: Request, res: Response): Promise<void> => {
@@ -53,10 +53,10 @@ export const putEndConversationApi = async (req: Request, res: Response): Promis
       if (error.message.startsWith(CONVERSATION_CONSTANTS.ERROR_CODES.CONVERSATION_ALREADY_ENDED)) {
         ResponseHelper.badRequest(res, '会話は既に終了されています');
       } else {
-        ResponseHelper.internalServerError(res, '会話の終了に失敗しました');
+        ResponseHelper.internalError(res, '会話の終了に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, '会話の終了に失敗しました');
+      ResponseHelper.internalError(res, '会話の終了に失敗しました');
     }
   }
 };

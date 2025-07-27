@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { InInstantwinSelectOptionService } from '../../services/in_instantwin_select_option_service';
+import { InInstantwinMessageSelectOptionService } from '../../services/in_instantwin_select_option_service';
 import { SelectOptionValidator } from './utils/select_option_validator';
 import { SELECT_OPTION_CONSTANTS } from './utils/select_option_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { SelectOptionResponse } from './types/select_option_response';
 
 interface ReorderRequest {
@@ -36,7 +36,7 @@ export const putSelectOptionsReorderApi = async (req: Request, res: Response): P
       }
     }
 
-    const selectOptions = await InInstantwinSelectOptionService.reorderSelectOptions(message_id, option_orders);
+    const selectOptions = await InInstantwinMessageSelectOptionService.reorderSelectOptions(message_id, option_orders);
 
     const response: { select_options: SelectOptionResponse[] } = {
       select_options: selectOptions.map(option => ({
@@ -60,10 +60,10 @@ export const putSelectOptionsReorderApi = async (req: Request, res: Response): P
       } else if (error.message.startsWith(SELECT_OPTION_CONSTANTS.ERROR_CODES.SELECT_OPTION_NOT_FOUND)) {
         ResponseHelper.notFound(res, '選択肢が見つかりません');
       } else {
-        ResponseHelper.internalServerError(res, '選択肢の順序更新に失敗しました');
+        ResponseHelper.internalError(res, '選択肢の順序更新に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, '選択肢の順序更新に失敗しました');
+      ResponseHelper.internalError(res, '選択肢の順序更新に失敗しました');
     }
   }
 };

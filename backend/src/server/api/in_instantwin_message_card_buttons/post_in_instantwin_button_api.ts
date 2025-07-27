@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { InInstantwinButtonService } from '../../services/in_instantwin_button_service';
 import { BUTTON_CONSTANTS } from './utils/button_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { ButtonCreateRequest } from './types/button_request';
 import { ButtonDetailResponse } from './types/button_response';
 
@@ -37,10 +37,10 @@ export const postInInstantwinButtonApi = async (req: Request, res: Response): Pr
       } else if (error.message.startsWith(BUTTON_CONSTANTS.ERROR_CODES.DUPLICATE_STEP_ORDER)) {
         ResponseHelper.badRequest(res, 'このステップ順序は既に使用されています');
       } else {
-        ResponseHelper.internalServerError(res, 'ボタンの作成に失敗しました');
+        ResponseHelper.internalError(res, 'ボタンの作成に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'ボタンの作成に失敗しました');
+      ResponseHelper.internalError(res, 'ボタンの作成に失敗しました');
     }
   }
 };

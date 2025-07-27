@@ -17,7 +17,8 @@ export const createCampaign = async (
 
     // Convert date strings to Date objects if provided
     const processedData = {
-      ...campaignData,
+      title: campaignData.title,
+      description: campaignData.description,
       status: campaignData.status || 'draft',
       start_date: campaignData.start_date
         ? new Date(campaignData.start_date)

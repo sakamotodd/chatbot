@@ -1,10 +1,10 @@
 import { Op } from 'sequelize';
-import { InInstantwinButton } from '../models/in_instantwin_buttons';
-import { InInstantwinCard } from '../models/in_instantwin_cards';
-import { ButtonCreateRequest, ButtonUpdateRequest } from '../api/in_instantwin_buttons/types/button_request';
-import { ButtonEntity, PaginationInfo } from '../api/in_instantwin_buttons/types/button_entities';
-import { ButtonValidator } from '../api/in_instantwin_buttons/utils/button_validator';
-import { BUTTON_CONSTANTS } from '../api/in_instantwin_buttons/utils/button_constants';
+import { InInstantwinButton } from '../../../database/models/in_instantwin_message_card_buttons';
+import { InInstantwinCard } from '../../../database/models/in_instantwin_cards';
+import { ButtonCreateRequest, ButtonUpdateRequest } from '../api/in_instantwin_message_card_buttons/types/button_request';
+import { ButtonEntity, PaginationInfo } from '../api/in_instantwin_message_card_buttons/types/button_entities';
+import { ButtonValidator } from '../api/in_instantwin_message_card_buttons/utils/button_validator';
+import { BUTTON_CONSTANTS } from '../api/in_instantwin_message_card_buttons/utils/button_constants';
 
 export class InInstantwinButtonService {
   static async createButton(data: ButtonCreateRequest): Promise<ButtonEntity> {

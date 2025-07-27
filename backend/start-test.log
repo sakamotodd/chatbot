@@ -1,0 +1,60 @@
+yarn run v1.22.22
+$ ts-node-dev --respawn --transpile-only src/server/index-minimal.ts
+[INFO] 15:03:09 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.8.3)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='campaigns';
+Executing (default): PRAGMA INDEX_LIST(`campaigns`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_prizes';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_prizes`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_templates';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_templates`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_nodes';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_nodes`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_edges';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_edges`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_messages';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_messages`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_select_options';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_select_options`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_cards';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_cards`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_card_buttons';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_card_buttons`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_conversations';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_conversations`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_lottery';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_lottery`)
+データベースの同期が完了しました。
+[ERROR] 15:03:09 Error: listen EADDRINUSE: address already in use :::3001
+[31merror[39m: Uncaught Exception: listen EADDRINUSE: address already in use :::3001 {"address":"::","code":"EADDRINUSE","errno":-48,"port":3001,"service":"instagram-crm-backend","stack":"Error: listen EADDRINUSE: address already in use :::3001\n    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n    at listenInCluster (node:net:1997:12)\n    at Server.listen (node:net:2102:7)\n    at startServer (/Users/sakamotodaigorou/private_task/chatbot/backend/src/server/index-minimal.ts:53:12)","syscall":"listen","timestamp":"2025-07-27 15:03:09"}
+[INFO] 15:03:39 Restarting: /Users/sakamotodaigorou/private_task/chatbot/backend/src/server/api/campaigns/get_campaigns_api.ts has been modified
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='campaigns';
+Executing (default): PRAGMA INDEX_LIST(`campaigns`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_prizes';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_prizes`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_templates';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_templates`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_nodes';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_nodes`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_edges';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_edges`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_messages';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_messages`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_select_options';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_select_options`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_cards';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_cards`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_card_buttons';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_card_buttons`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_conversations';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_conversations`)
+Executing (default): SELECT name FROM sqlite_master WHERE type='table' AND name='in_instantwin_message_lottery';
+Executing (default): PRAGMA INDEX_LIST(`in_instantwin_message_lottery`)
+データベースの同期が完了しました。
+[32minfo[39m: 🚀 サーバーが起動しました {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:03:40"}
+[32minfo[39m: 🌍 環境: development {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:03:40"}
+[32minfo[39m: 📡 ポート: 3001 {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:03:40"}
+[32minfo[39m: 🔗 URL: http://localhost:3001 {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:03:40"}
+[32minfo[39m: ❤️  Health Check: http://localhost:3001/health {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:03:40"}
+[32minfo[39m: 📊 API: http://localhost:3001/api/campaigns {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:03:40"}
+[32minfo[39m: SIGTERM signal received: closing HTTP server {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:09:00"}
+[32minfo[39m: HTTP server closed. {"service":"instagram-crm-backend","timestamp":"2025-07-27 15:09:00"}

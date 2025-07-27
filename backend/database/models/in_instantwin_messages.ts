@@ -12,6 +12,9 @@ interface InInstantwinMessageAttributes {
   node_id: number;
   prize_id: number;
   text?: string;
+  content?: string;
+  type?: string;
+  step_order?: number;
   message_type: MessageType;
   media_id?: number;
   media_url?: string;
@@ -27,6 +30,9 @@ class InInstantwinMessage extends Model<InInstantwinMessageAttributes, InInstant
   public node_id!: number;
   public prize_id!: number;
   public text?: string;
+  public content?: string;
+  public type?: string;
+  public step_order?: number;
   public message_type!: MessageType;
   public media_id?: number;
   public media_url?: string;
@@ -65,6 +71,18 @@ export function createInInstantwinMessageModel(sequelize: Sequelize, dataTypes: 
       },
       text: {
         type: dataTypes.TEXT,
+        allowNull: true,
+      },
+      content: {
+        type: dataTypes.TEXT,
+        allowNull: true,
+      },
+      type: {
+        type: dataTypes.STRING(50),
+        allowNull: true,
+      },
+      step_order: {
+        type: dataTypes.INTEGER,
         allowNull: true,
       },
       message_type: {

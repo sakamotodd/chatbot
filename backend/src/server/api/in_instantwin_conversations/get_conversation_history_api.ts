@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinConversationService } from '../../services/in_instantwin_conversation_service';
 import { ConversationValidator } from './utils/conversation_validator';
 import { CONVERSATION_CONSTANTS } from './utils/conversation_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { ConversationResponse } from './types/conversation_response';
 
 export const getConversationHistoryApi = async (req: Request, res: Response): Promise<void> => {
@@ -39,6 +39,6 @@ export const getConversationHistoryApi = async (req: Request, res: Response): Pr
     ResponseHelper.success(res, response, 'ユーザーの会話履歴を取得しました');
   } catch (error) {
     console.error('Error in getConversationHistoryApi:', error);
-    ResponseHelper.internalServerError(res, '会話履歴の取得に失敗しました');
+    ResponseHelper.internalError(res, '会話履歴の取得に失敗しました');
   }
 };

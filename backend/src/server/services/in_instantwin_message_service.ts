@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
-import { InInstantwinMessage } from '../models/in_instantwin_messages';
-import { InInstantwinNode } from '../models/in_instantwin_nodes';
+import { InInstantwinMessage } from '../../../database/models/in_instantwin_messages';
+import { InInstantwinNode } from '../../../database/models/in_instantwin_nodes';
 import { MessageCreateRequest, MessageUpdateRequest } from '../api/in_instantwin_messages/types/message_request';
 import { MessageEntity, PaginationInfo } from '../api/in_instantwin_messages/types/message_entities';
 import { MessageValidator } from '../api/in_instantwin_messages/utils/message_validator';

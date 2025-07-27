@@ -7,6 +7,9 @@ interface InInstantwinConversationAttributes {
   template_id?: number;
   current_node_id?: number;
   instagram_user_id: string;
+  user_id?: string;
+  status?: string;
+  metadata?: object;
   sender_id?: number;
   message_text?: string;
   message_timestamp: Date;
@@ -27,6 +30,9 @@ class InInstantwinConversation extends Model<InInstantwinConversationAttributes,
   public template_id?: number;
   public current_node_id?: number;
   public instagram_user_id!: string;
+  public user_id?: string;
+  public status?: string;
+  public metadata?: object;
   public sender_id?: number;
   public message_text?: string;
   public message_timestamp!: Date;

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinMessageService } from '../../services/in_instantwin_message_service';
 import { MessageValidator } from './utils/message_validator';
 import { MESSAGE_CONSTANTS } from './utils/message_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { MessageUpdateRequest } from './types/message_request';
 import { MessageDetailResponse } from './types/message_response';
 
@@ -48,10 +48,10 @@ export const putInInstantwinMessageApi = async (req: Request, res: Response): Pr
       } else if (error.message.startsWith(MESSAGE_CONSTANTS.ERROR_CODES.DUPLICATE_STEP_ORDER)) {
         ResponseHelper.badRequest(res, 'このステップ順序は既に使用されています');
       } else {
-        ResponseHelper.internalServerError(res, 'メッセージの更新に失敗しました');
+        ResponseHelper.internalError(res, 'メッセージの更新に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'メッセージの更新に失敗しました');
+      ResponseHelper.internalError(res, 'メッセージの更新に失敗しました');
     }
   }
 };

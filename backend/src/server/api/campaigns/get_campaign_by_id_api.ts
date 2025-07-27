@@ -12,13 +12,41 @@ export const getCampaignById = async (
     const campaignId = parseInt(id, 10);
 
     if (isNaN(campaignId)) {
-      ResponseHelper.badRequest(res, '無効なキャンペーンIDです');
-      return;
+      return res.status(400).json({
+        success: false,
+        error: {
+          code: 'INVALID_PARAMETER',
+          message: '無効なキャンペーンIDです',
+          details: {
+            field: 'id',
+            value: id,
+            expected: 'number',
+          },
+        },
+      });
     }
 
     const campaign = await CampaignService.getCampaignById(campaignId);
-    ResponseHelper.success(res, campaign, 'キャンペーン詳細を取得しました');
+    
+    res.status(200).json({
+      success: true,
+      data: {
+        campaign,
+      },
+    });
   } catch (error) {
+    if ((error as any).statusCode === 404) {
+      return res.status(404).json({
+        success: false,
+        error: {
+          code: 'CAMPAIGN_NOT_FOUND',
+          message: '指定されたキャンペーンが見つかりません',
+          details: {
+            campaign_id: campaignId,
+          },
+        },
+      });
+    }
     next(error);
   }
 };

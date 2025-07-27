@@ -1,6 +1,6 @@
-import { InInstantwinPrize } from '../models/in_instantwin_prizes';
-import { InInstantwinLotteryHistory } from '../models/in_instantwin_lottery_histories';
-import { InInstantwinConversation } from '../models/in_instantwin_conversations';
+import { InInstantwinPrize } from '../../../database/models/in_instantwin_prizes';
+import { InInstantwinLotteryHistory } from '../../../database/models/in_instantwin_lottery_histories';
+import { InInstantwinConversation } from '../../../database/models/in_instantwin_conversations';
 import logger from '../utils/logger';
 
 export interface LotteryResult {

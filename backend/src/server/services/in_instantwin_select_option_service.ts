@@ -1,12 +1,12 @@
 import { Op } from 'sequelize';
-import { InInstantwinSelectOption } from '../models/in_instantwin_select_options';
-import { InInstantwinMessage } from '../models/in_instantwin_messages';
-import { SelectOptionCreateRequest, SelectOptionUpdateRequest } from '../api/in_instantwin_select_options/types/select_option_request';
-import { SelectOptionEntity, PaginationInfo } from '../api/in_instantwin_select_options/types/select_option_entities';
-import { SelectOptionValidator } from '../api/in_instantwin_select_options/utils/select_option_validator';
-import { SELECT_OPTION_CONSTANTS } from '../api/in_instantwin_select_options/utils/select_option_constants';
+import { InInstantwinMessageSelectOption } from '../../../database/models/in_instantwin_message_select_options';
+import { InInstantwinMessage } from '../../../database/models/in_instantwin_messages';
+import { SelectOptionCreateRequest, SelectOptionUpdateRequest } from '../api/in_instantwin_message_select_options/types/select_option_request';
+import { SelectOptionEntity, PaginationInfo } from '../api/in_instantwin_message_select_options/types/select_option_entities';
+import { SelectOptionValidator } from '../api/in_instantwin_message_select_options/utils/select_option_validator';
+import { SELECT_OPTION_CONSTANTS } from '../api/in_instantwin_message_select_options/utils/select_option_constants';
 
-export class InInstantwinSelectOptionService {
+export class InInstantwinMessageSelectOptionService {
   static async createSelectOption(data: SelectOptionCreateRequest): Promise<SelectOptionEntity> {
     // Validate request data
     const validation = SelectOptionValidator.validateCreateRequest(data);
@@ -21,7 +21,7 @@ export class InInstantwinSelectOptionService {
     }
 
     // Check for duplicate value within the same message
-    const existingOption = await InInstantwinSelectOption.findOne({
+    const existingOption = await InInstantwinMessageSelectOption.findOne({
       where: {
         message_id: data.message_id,
         value: data.value.trim(),
@@ -34,14 +34,14 @@ export class InInstantwinSelectOptionService {
     // If no step_order is provided, set it to the next available order for this message
     let stepOrder = data.step_order;
     if (stepOrder === undefined) {
-      const lastOption = await InInstantwinSelectOption.findOne({
+      const lastOption = await InInstantwinMessageSelectOption.findOne({
         where: { message_id: data.message_id },
         order: [['step_order', 'DESC']],
       });
       stepOrder = lastOption ? lastOption.step_order + 1 : 1;
     } else {
       // Check for duplicate step order within the same message
-      const existingOrder = await InInstantwinSelectOption.findOne({
+      const existingOrder = await InInstantwinMessageSelectOption.findOne({
         where: {
           message_id: data.message_id,
           step_order: stepOrder,
@@ -53,7 +53,7 @@ export class InInstantwinSelectOptionService {
     }
 
     // Create the select option
-    const selectOption = await InInstantwinSelectOption.create({
+    const selectOption = await InInstantwinMessageSelectOption.create({
       message_id: data.message_id,
       text: data.text.trim(),
       value: data.value.trim(),
@@ -64,7 +64,7 @@ export class InInstantwinSelectOptionService {
   }
 
   static async getSelectOptionById(id: number): Promise<SelectOptionEntity | null> {
-    const selectOption = await InInstantwinSelectOption.findByPk(id);
+    const selectOption = await InInstantwinMessageSelectOption.findByPk(id);
     return selectOption ? this.convertToEntity(selectOption) : null;
   }
 
@@ -82,7 +82,7 @@ export class InInstantwinSelectOptionService {
 
     const offset = (page - 1) * limit;
 
-    const { count, rows } = await InInstantwinSelectOption.findAndCountAll({
+    const { count, rows } = await InInstantwinMessageSelectOption.findAndCountAll({
       where,
       limit,
       offset,
@@ -111,7 +111,7 @@ export class InInstantwinSelectOptionService {
       throw new Error(`${SELECT_OPTION_CONSTANTS.ERROR_CODES.VALIDATION_ERROR}: ${validation.errors.join(', ')}`);
     }
 
-    const selectOption = await InInstantwinSelectOption.findByPk(id);
+    const selectOption = await InInstantwinMessageSelectOption.findByPk(id);
     if (!selectOption) {
       return null;
     }
@@ -127,7 +127,7 @@ export class InInstantwinSelectOptionService {
     // Check for duplicate value if being updated
     if (data.value !== undefined) {
       const messageId = data.message_id !== undefined ? data.message_id : selectOption.message_id;
-      const existingOption = await InInstantwinSelectOption.findOne({
+      const existingOption = await InInstantwinMessageSelectOption.findOne({
         where: {
           message_id: messageId,
           value: data.value.trim(),
@@ -142,7 +142,7 @@ export class InInstantwinSelectOptionService {
     // Check for duplicate step order if being updated
     if (data.step_order !== undefined) {
       const messageId = data.message_id !== undefined ? data.message_id : selectOption.message_id;
-      const existingOrder = await InInstantwinSelectOption.findOne({
+      const existingOrder = await InInstantwinMessageSelectOption.findOne({
         where: {
           message_id: messageId,
           step_order: data.step_order,
@@ -166,7 +166,7 @@ export class InInstantwinSelectOptionService {
   }
 
   static async deleteSelectOption(id: number): Promise<boolean> {
-    const selectOption = await InInstantwinSelectOption.findByPk(id);
+    const selectOption = await InInstantwinMessageSelectOption.findByPk(id);
     if (!selectOption) {
       return false;
     }
@@ -176,7 +176,7 @@ export class InInstantwinSelectOptionService {
   }
 
   static async getSelectOptionsByMessageId(messageId: number): Promise<SelectOptionEntity[]> {
-    const selectOptions = await InInstantwinSelectOption.findAll({
+    const selectOptions = await InInstantwinMessageSelectOption.findAll({
       where: { message_id: messageId },
       order: [['step_order', 'ASC'], ['created', 'ASC']],
     });
@@ -193,7 +193,7 @@ export class InInstantwinSelectOptionService {
 
     // Verify all select options belong to the specified message
     const optionIds = optionOrders.map(oo => oo.id);
-    const selectOptions = await InInstantwinSelectOption.findAll({
+    const selectOptions = await InInstantwinMessageSelectOption.findAll({
       where: {
         id: optionIds,
         message_id: messageId,
@@ -206,7 +206,7 @@ export class InInstantwinSelectOptionService {
 
     // Update step orders
     for (const orderData of optionOrders) {
-      await InInstantwinSelectOption.update(
+      await InInstantwinMessageSelectOption.update(
         { step_order: orderData.step_order },
         { where: { id: orderData.id } }
       );
@@ -216,7 +216,7 @@ export class InInstantwinSelectOptionService {
     return this.getSelectOptionsByMessageId(messageId);
   }
 
-  private static convertToEntity(selectOption: InInstantwinSelectOption): SelectOptionEntity {
+  private static convertToEntity(selectOption: InInstantwinMessageSelectOption): SelectOptionEntity {
     return {
       id: selectOption.id,
       message_id: selectOption.message_id,

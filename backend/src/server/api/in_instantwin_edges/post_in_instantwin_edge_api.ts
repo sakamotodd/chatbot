@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { InInstantwinEdgeService } from '../../services/in_instantwin_edge_service';
 import { EDGE_CONSTANTS } from './utils/edge_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { EdgeCreateRequest } from './types/edge_request';
 import { EdgeDetailResponse } from './types/edge_response';
 
@@ -40,10 +40,10 @@ export const postInInstantwinEdgeApi = async (req: Request, res: Response): Prom
       } else if (error.message.startsWith(EDGE_CONSTANTS.ERROR_CODES.CIRCULAR_REFERENCE)) {
         ResponseHelper.badRequest(res, '循環参照が発生するため、このエッジは作成できません');
       } else {
-        ResponseHelper.internalServerError(res, 'エッジの作成に失敗しました');
+        ResponseHelper.internalError(res, 'エッジの作成に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'エッジの作成に失敗しました');
+      ResponseHelper.internalError(res, 'エッジの作成に失敗しました');
     }
   }
 };

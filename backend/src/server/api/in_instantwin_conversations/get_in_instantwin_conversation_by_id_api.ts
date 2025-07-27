@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinConversationService } from '../../services/in_instantwin_conversation_service';
 import { ConversationValidator } from './utils/conversation_validator';
 import { CONVERSATION_CONSTANTS } from './utils/conversation_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { ConversationDetailResponse } from './types/conversation_response';
 
 export const getInInstantwinConversationByIdApi = async (req: Request, res: Response): Promise<void> => {
@@ -39,6 +39,6 @@ export const getInInstantwinConversationByIdApi = async (req: Request, res: Resp
     ResponseHelper.success(res, response, CONVERSATION_CONSTANTS.MESSAGES.CONVERSATION_RETRIEVED);
   } catch (error) {
     console.error('Error in getInInstantwinConversationByIdApi:', error);
-    ResponseHelper.internalServerError(res, '会話の取得に失敗しました');
+    ResponseHelper.internalError(res, '会話の取得に失敗しました');
   }
 };

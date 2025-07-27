@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinEdgeService } from '../../services/in_instantwin_edge_service';
 import { EdgeValidator } from './utils/edge_validator';
 import { EDGE_CONSTANTS } from './utils/edge_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { EdgeUpdateRequest } from './types/edge_request';
 import { EdgeDetailResponse } from './types/edge_response';
 
@@ -51,10 +51,10 @@ export const putInInstantwinEdgeApi = async (req: Request, res: Response): Promi
       } else if (error.message.startsWith(EDGE_CONSTANTS.ERROR_CODES.CIRCULAR_REFERENCE)) {
         ResponseHelper.badRequest(res, '循環参照が発生するため、このエッジは更新できません');
       } else {
-        ResponseHelper.internalServerError(res, 'エッジの更新に失敗しました');
+        ResponseHelper.internalError(res, 'エッジの更新に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'エッジの更新に失敗しました');
+      ResponseHelper.internalError(res, 'エッジの更新に失敗しました');
     }
   }
 };

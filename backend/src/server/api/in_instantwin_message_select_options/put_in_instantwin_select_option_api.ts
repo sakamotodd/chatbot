@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { InInstantwinSelectOptionService } from '../../services/in_instantwin_select_option_service';
+import { InInstantwinMessageSelectOptionService } from '../../services/in_instantwin_select_option_service';
 import { SelectOptionValidator } from './utils/select_option_validator';
 import { SELECT_OPTION_CONSTANTS } from './utils/select_option_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { SelectOptionUpdateRequest } from './types/select_option_request';
 import { SelectOptionDetailResponse } from './types/select_option_response';
 
@@ -17,7 +17,7 @@ export const putInInstantwinSelectOptionApi = async (req: Request, res: Response
 
     const selectOptionData: SelectOptionUpdateRequest = req.body;
 
-    const selectOption = await InInstantwinSelectOptionService.updateSelectOption(numericId, selectOptionData);
+    const selectOption = await InInstantwinMessageSelectOptionService.updateSelectOption(numericId, selectOptionData);
     
     if (!selectOption) {
       ResponseHelper.notFound(res, '選択肢が見つかりません');
@@ -50,10 +50,10 @@ export const putInInstantwinSelectOptionApi = async (req: Request, res: Response
       } else if (error.message.startsWith(SELECT_OPTION_CONSTANTS.ERROR_CODES.DUPLICATE_VALUE)) {
         ResponseHelper.badRequest(res, 'この値は既に使用されています');
       } else {
-        ResponseHelper.internalServerError(res, '選択肢の更新に失敗しました');
+        ResponseHelper.internalError(res, '選択肢の更新に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, '選択肢の更新に失敗しました');
+      ResponseHelper.internalError(res, '選択肢の更新に失敗しました');
     }
   }
 };

@@ -12,7 +12,7 @@ export interface ButtonResponse {
 }
 
 export interface ButtonListResponse {
-  in_instantwin_buttons: ButtonResponse[];
+  in_instantwin_message_card_buttons: ButtonResponse[];
   pagination: {
     current_page: number;
     total_pages: number;

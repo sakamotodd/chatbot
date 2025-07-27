@@ -5,8 +5,12 @@ interface InInstantwinMessageSelectOptionAttributes {
   node_id: number;
   parent_node_id?: number;
   prize_id: number;
+  message_id?: number;
   select_option: string;
+  text?: string;
+  value?: string;
   option_value?: string;
+  step_order?: number;
   display_order: number;
   created: Date;
   modified: Date;
@@ -19,8 +23,12 @@ class InInstantwinMessageSelectOption extends Model<InInstantwinMessageSelectOpt
   public node_id!: number;
   public parent_node_id?: number;
   public prize_id!: number;
+  public message_id?: number;
   public select_option!: string;
+  public text?: string;
+  public value?: string;
   public option_value?: string;
+  public step_order?: number;
   public display_order!: number;
   public created!: Date;
   public modified!: Date;

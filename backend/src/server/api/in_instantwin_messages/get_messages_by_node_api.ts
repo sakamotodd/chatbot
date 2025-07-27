@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinMessageService } from '../../services/in_instantwin_message_service';
 import { MessageValidator } from './utils/message_validator';
 import { MESSAGE_CONSTANTS } from './utils/message_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { MessageResponse } from './types/message_response';
 
 export const getMessagesByNodeApi = async (req: Request, res: Response): Promise<void> => {
@@ -31,6 +31,6 @@ export const getMessagesByNodeApi = async (req: Request, res: Response): Promise
     ResponseHelper.success(res, response, MESSAGE_CONSTANTS.MESSAGES.MESSAGES_RETRIEVED);
   } catch (error) {
     console.error('Error in getMessagesByNodeApi:', error);
-    ResponseHelper.internalServerError(res, 'ノードのメッセージ取得に失敗しました');
+    ResponseHelper.internalError(res, 'ノードのメッセージ取得に失敗しました');
   }
 };

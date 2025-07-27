@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinEdgeService } from '../../services/in_instantwin_edge_service';
 import { EdgeValidator } from './utils/edge_validator';
 import { EDGE_CONSTANTS } from './utils/edge_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { EdgeListResponse } from './types/edge_response';
 
 export const getInInstantwinEdgesApi = async (req: Request, res: Response): Promise<void> => {
@@ -32,7 +32,7 @@ export const getInInstantwinEdgesApi = async (req: Request, res: Response): Prom
     if (error instanceof Error && error.message.startsWith(EDGE_CONSTANTS.ERROR_CODES.VALIDATION_ERROR)) {
       ResponseHelper.badRequest(res, error.message);
     } else {
-      ResponseHelper.internalServerError(res, 'エッジ一覧の取得に失敗しました');
+      ResponseHelper.internalError(res, 'エッジ一覧の取得に失敗しました');
     }
   }
 };

@@ -4,7 +4,9 @@ import { setupTestDatabase, cleanupTestDatabase } from '../utils/database';
 import { validCampaignData, updateCampaignData, invalidCampaignData } from '../fixtures/campaigns';
 
 // Mock the campaign service to avoid database dependency
-jest.mock('../../src/server/services/campaign_service');
+jest.mock('../../src/server/services/campaign_service', () => ({
+  CampaignService: require('../__mocks__/campaign_service').CampaignService
+}));
 
 describe('Campaign API Integration Tests', () => {
   beforeAll(async () => {

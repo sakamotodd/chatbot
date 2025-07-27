@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { InInstantwinCardService } from '../../services/in_instantwin_card_service';
 import { CARD_CONSTANTS } from './utils/card_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { CardCreateRequest } from './types/card_request';
 import { CardDetailResponse } from './types/card_response';
 
@@ -37,10 +37,10 @@ export const postInInstantwinCardApi = async (req: Request, res: Response): Prom
       } else if (error.message.startsWith(CARD_CONSTANTS.ERROR_CODES.DUPLICATE_STEP_ORDER)) {
         ResponseHelper.badRequest(res, 'このステップ順序は既に使用されています');
       } else {
-        ResponseHelper.internalServerError(res, 'カードの作成に失敗しました');
+        ResponseHelper.internalError(res, 'カードの作成に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'カードの作成に失敗しました');
+      ResponseHelper.internalError(res, 'カードの作成に失敗しました');
     }
   }
 };

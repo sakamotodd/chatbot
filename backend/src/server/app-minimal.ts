@@ -12,22 +12,9 @@ import { errorHandler, notFoundHandler } from './middleware/error_middleware';
 
 // Router imports
 import campaignRoutes from './api/campaigns';
-// import prizeRoutes from './api/in_instantwin_prizes';
-// import templateRoutes from './api/in_instantwin_templates';
-// import nodeRoutes from './api/in_instantwin_nodes';
-// import edgeRoutes from './api/in_instantwin_edges';
-// import flowRoutes from './api/flow';
-// import messageRoutes from './api/in_instantwin_messages';
-// import selectOptionRoutes from './api/in_instantwin_message_select_options';
-// import cardRoutes from './api/in_instantwin_cards';
-// import buttonRoutes from './api/in_instantwin_message_card_buttons';
-// import conversationRoutes from './api/in_instantwin_conversations';
-// import websocketRoutes from './api/websocket';
-// import lotteryRoutes from './api/lottery';
 
 // Utils
 import logger from './utils/logger';
-// import { WebSocketService } from './services/websocket_service';
 
 const app = express();
 const server = createServer(app);
@@ -49,8 +36,16 @@ const limiter = rateLimit({
   },
 });
 
+// Trust proxy for rate limiting
+app.set('trust proxy', 1);
+
+// Apply rate limiting to all requests
+app.use(limiter);
+
 // Security middleware
 app.use(helmet());
+
+// CORS
 app.use(
   cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:5173',
@@ -58,13 +53,12 @@ app.use(
   })
 );
 
-// Basic middleware
-app.use(compression() as any);
+// Compression
+app.use(compression());
+
+// Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Apply rate limiting to all requests
-app.use(limiter);
 
 // Logging middleware
 app.use(loggingMiddleware);
@@ -73,42 +67,29 @@ app.use(loggingMiddleware);
 app.get('/health', (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'サーバーは正常に動作しています',
+    message: 'Server is healthy',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV || 'development',
   });
 });
 
 // API routes
-app.use('/api', (req, res, next) => {
-  res.header('Content-Type', 'application/json; charset=utf-8');
-  next();
-});
-
-// API route handlers
 app.use('/api/campaigns', campaignRoutes);
-// app.use('/api', prizeRoutes);
-// app.use('/api', templateRoutes);
-// app.use('/api', nodeRoutes);
-// app.use('/api', edgeRoutes);
-// app.use('/api', flowRoutes);
-// app.use('/api', messageRoutes);
-// app.use('/api', selectOptionRoutes);
-// app.use('/api', cardRoutes);
-// app.use('/api', buttonRoutes);
-// app.use('/api', conversationRoutes);
-// app.use('/api', websocketRoutes);
-// app.use('/api', lotteryRoutes);
 
-// Initialize WebSocket service
-// WebSocketService.initialize(io);
-
-// 404 handler
+// Handle 404 for unmatched routes
 app.use(notFoundHandler);
 
-// Error handler (must be last)
+// Global error handler
 app.use(errorHandler);
 
-// Export app and server for testing and main entry point
+// Socket.IO connection handling
+io.on('connection', (socket) => {
+  logger.info(`New socket connection: ${socket.id}`);
+
+  socket.on('disconnect', () => {
+    logger.info(`Socket disconnected: ${socket.id}`);
+  });
+});
+
 export { app, server, io };
 export default app;

@@ -10,7 +10,7 @@ export interface SelectOptionResponse {
 }
 
 export interface SelectOptionListResponse {
-  in_instantwin_select_options: SelectOptionResponse[];
+  in_instantwin_message_select_options: SelectOptionResponse[];
   pagination: {
     current_page: number;
     total_pages: number;

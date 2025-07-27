@@ -8,50 +8,44 @@ import { Op } from 'sequelize';
 import logger from '../utils/logger';
 
 export class CampaignService {
-  static async getAllCampaigns(options: {
+  static async getCampaigns(options: {
     page?: number;
     limit?: number;
-    search?: string;
     status?: string;
-    sortBy?: string;
-    sortOrder?: 'asc' | 'desc';
+    sort?: string;
   }) {
     const {
       page = 1,
-      limit = 20,
-      search,
+      limit = 10,
       status,
-      sortBy = 'created',
-      sortOrder = 'desc',
+      sort = 'created_desc',
     } = options;
 
     const offset = (page - 1) * limit;
     const where: any = {};
-
-    // Search filter
-    if (search) {
-      where[Op.or] = [
-        { title: { [Op.like]: `%${search}%` } },
-        { description: { [Op.like]: `%${search}%` } },
-      ];
-    }
 
     // Status filter
     if (status) {
       where.status = status;
     }
 
+    // Sort parsing
+    let sortBy = 'created';
+    let sortOrder: 'ASC' | 'DESC' = 'DESC';
+    
+    if (sort) {
+      const sortParts = sort.split('_');
+      if (sortParts.length === 2) {
+        sortBy = sortParts[0];
+        sortOrder = sortParts[1].toUpperCase() as 'ASC' | 'DESC';
+      }
+    }
+
     try {
       const { count, rows } = await Campaign.findAndCountAll({
         where,
-        include: [
-          {
-            model: InInstantwinPrize,
-            as: 'prizes',
-            attributes: ['id', 'name', 'winning_rate'],
-          },
-        ],
-        order: [[sortBy, sortOrder.toUpperCase()]],
+        attributes: ['id', 'title', 'description', 'status', 'start_date', 'end_date', 'created', 'modified'],
+        order: [[sortBy, sortOrder]],
         limit,
         offset,
       });
@@ -74,12 +68,7 @@ export class CampaignService {
   static async getCampaignById(id: number) {
     try {
       const campaign = await Campaign.findByPk(id, {
-        include: [
-          {
-            model: InInstantwinPrize,
-            as: 'prizes',
-          },
-        ],
+        attributes: ['id', 'title', 'description', 'status', 'start_date', 'end_date', 'created', 'modified'],
       });
 
       if (!campaign) {

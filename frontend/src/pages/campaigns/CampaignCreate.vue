@@ -46,6 +46,29 @@
           </p>
         </div>
 
+        <!-- ステータス -->
+        <div>
+          <label for="status" class="block text-sm font-medium text-gray-700">
+            ステータス
+          </label>
+          <select
+            v-model="form.status"
+            id="status"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            :class="{ 'border-red-500': errors.status }"
+          >
+            <option :value="CampaignStatus.DRAFT">下書き</option>
+            <option :value="CampaignStatus.ACTIVE">アクティブ</option>
+            <option :value="CampaignStatus.PAUSED">一時停止</option>
+          </select>
+          <p v-if="errors.status" class="mt-1 text-sm text-red-600">
+            {{ errors.status }}
+          </p>
+          <p class="mt-1 text-sm text-gray-500">
+            下書きで保存後、後から設定を変更できます
+          </p>
+        </div>
+
         <!-- 開始日・終了日 -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
           <div>
@@ -136,16 +159,18 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCampaignStore } from '../../stores/campaigns'
 import type { CampaignCreateRequest } from '../../types/api'
+import { CampaignStatus } from '../../types/api'
 
 const router = useRouter()
 const campaignStore = useCampaignStore()
 
 // フォームデータ
-const form = reactive<CampaignCreateRequest>({
+const form = reactive<CampaignCreateRequest & { status: CampaignStatus }>({
   name: '',
   description: '',
   start_date: '',
   end_date: '',
+  status: CampaignStatus.DRAFT,
 })
 
 // バリデーションエラー

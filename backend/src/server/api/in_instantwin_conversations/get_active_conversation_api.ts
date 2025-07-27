@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { InInstantwinConversationService } from '../../services/in_instantwin_conversation_service';
 import { CONVERSATION_CONSTANTS } from './utils/conversation_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { ConversationDetailResponse } from './types/conversation_response';
 
 export const getActiveConversationApi = async (req: Request, res: Response): Promise<void> => {
@@ -53,6 +53,6 @@ export const getActiveConversationApi = async (req: Request, res: Response): Pro
     ResponseHelper.success(res, response, 'アクティブな会話を取得しました');
   } catch (error) {
     console.error('Error in getActiveConversationApi:', error);
-    ResponseHelper.internalServerError(res, 'アクティブな会話の取得に失敗しました');
+    ResponseHelper.internalError(res, 'アクティブな会話の取得に失敗しました');
   }
 };

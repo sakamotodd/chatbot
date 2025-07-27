@@ -13,6 +13,11 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
+  // ヘッダーが既に送信されている場合は何もしない
+  if (res.headersSent) {
+    return _next(error);
+  }
+
   logger.error('エラーが発生しました:', {
     message: error.message,
     stack: error.stack,
@@ -31,60 +36,60 @@ export const errorHandler = (
       message: err.message,
     }));
 
-    ResponseHelper.badRequest(
+    return ResponseHelper.badRequest(
       res,
       'バリデーションエラーが発生しました',
       validationErrors
     );
-    return;
   }
 
   // Sequelize ユニーク制約エラー
   if (error.name === 'SequelizeUniqueConstraintError') {
-    ResponseHelper.conflict(res, '重複するデータが存在します');
-    return;
+    return ResponseHelper.conflict(res, '重複するデータが存在します');
   }
 
   // Sequelize 外部キー制約エラー
   if (error.name === 'SequelizeForeignKeyConstraintError') {
-    ResponseHelper.badRequest(res, '関連するデータが存在しません');
-    return;
+    return ResponseHelper.badRequest(res, '関連するデータが存在しません');
   }
 
   // JWT エラー
   if (error.name === 'JsonWebTokenError') {
-    ResponseHelper.unauthorized(res, '無効なトークンです');
-    return;
+    return ResponseHelper.unauthorized(res, '無効なトークンです');
   }
 
   if (error.name === 'TokenExpiredError') {
-    ResponseHelper.unauthorized(res, 'トークンが期限切れです');
-    return;
+    return ResponseHelper.unauthorized(res, 'トークンが期限切れです');
   }
 
   // カスタムエラー
   const statusCode = error.statusCode || 500;
-  const message = error.message || '内部サーバーエラーが発生しました';
+  const message = error.message || 'サーバー内部エラーが発生しました';
 
   if (statusCode === 400) {
-    ResponseHelper.badRequest(res, message, error.details);
+    return ResponseHelper.badRequest(res, message, error.details);
   } else if (statusCode === 401) {
-    ResponseHelper.unauthorized(res, message);
+    return ResponseHelper.unauthorized(res, message);
   } else if (statusCode === 403) {
-    ResponseHelper.forbidden(res, message);
+    return ResponseHelper.forbidden(res, message);
   } else if (statusCode === 404) {
-    ResponseHelper.notFound(res, message);
+    return ResponseHelper.notFound(res, message);
   } else if (statusCode === 409) {
-    ResponseHelper.conflict(res, message);
+    return ResponseHelper.conflict(res, message);
   } else {
-    ResponseHelper.internalError(res, message, error.stack);
+    return ResponseHelper.internalError(res, message, error.stack);
   }
 };
 
 export const notFoundHandler = (req: Request, res: Response): void => {
+  const details = {
+    path: req.url,
+    method: req.method
+  };
   ResponseHelper.notFound(
     res,
-    `エンドポイント ${req.originalUrl} が見つかりません`
+    'リクエストされたリソースが見つかりません',
+    details
   );
 };
 

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { FlowValidationService } from '../../services/flow_validation_service';
 import { FlowValidator } from './utils/flow_validator';
 import { FLOW_CONSTANTS } from './utils/flow_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { FlowValidationResponse } from './types/flow_response';
 
 export const getFlowValidationApi = async (req: Request, res: Response): Promise<void> => {
@@ -40,10 +40,10 @@ export const getFlowValidationApi = async (req: Request, res: Response): Promise
       } else if (error.message.startsWith(FLOW_CONSTANTS.ERROR_CODES.NO_NODES_FOUND)) {
         ResponseHelper.badRequest(res, 'テンプレートにノードが見つかりません');
       } else {
-        ResponseHelper.internalServerError(res, 'フロー検証に失敗しました');
+        ResponseHelper.internalError(res, 'フロー検証に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'フロー検証に失敗しました');
+      ResponseHelper.internalError(res, 'フロー検証に失敗しました');
     }
   }
 };

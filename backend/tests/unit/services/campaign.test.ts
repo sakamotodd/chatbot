@@ -35,7 +35,7 @@ describe('CampaignService Unit Tests', () => {
 
     it('should return paginated campaigns with default options', async () => {
       MockedCampaign.findAndCountAll.mockResolvedValue({
-        count: 2,
+        count: [{ count: 2 }] as any,
         rows: mockCampaigns as any[]
       });
 
@@ -66,7 +66,7 @@ describe('CampaignService Unit Tests', () => {
 
     it('should apply search filter', async () => {
       MockedCampaign.findAndCountAll.mockResolvedValue({
-        count: 1,
+        count: [{ count: 1 }] as any,
         rows: [mockCampaigns[0]] as any[]
       });
 
@@ -83,7 +83,7 @@ describe('CampaignService Unit Tests', () => {
 
     it('should apply status filter', async () => {
       MockedCampaign.findAndCountAll.mockResolvedValue({
-        count: 1,
+        count: [{ count: 1 }] as any,
         rows: [mockCampaigns[0]] as any[]
       });
 
@@ -98,7 +98,7 @@ describe('CampaignService Unit Tests', () => {
 
     it('should handle pagination correctly', async () => {
       MockedCampaign.findAndCountAll.mockResolvedValue({
-        count: 25,
+        count: [{ count: 25 }] as any,
         rows: mockCampaigns as any[]
       });
 

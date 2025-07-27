@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
-import { InInstantwinCard } from '../models/in_instantwin_cards';
-import { InInstantwinMessage } from '../models/in_instantwin_messages';
+import { InInstantwinCard } from '../../../database/models/in_instantwin_cards';
+import { InInstantwinMessage } from '../../../database/models/in_instantwin_messages';
 import { CardCreateRequest, CardUpdateRequest } from '../api/in_instantwin_cards/types/card_request';
 import { CardEntity, PaginationInfo } from '../api/in_instantwin_cards/types/card_entities';
 import { CardValidator } from '../api/in_instantwin_cards/utils/card_validator';

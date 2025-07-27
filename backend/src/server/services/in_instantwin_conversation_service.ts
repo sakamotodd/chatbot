@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
-import { InInstantwinConversation } from '../models/in_instantwin_conversations';
-import { InInstantwinTemplate } from '../models/in_instantwin_templates';
-import { InInstantwinNode } from '../models/in_instantwin_nodes';
+import { InInstantwinConversation } from '../../../database/models/in_instantwin_conversations';
+import { InInstantwinTemplate } from '../../../database/models/in_instantwin_templates';
+import { InInstantwinNode } from '../../../database/models/in_instantwin_nodes';
 import { ConversationCreateRequest, ConversationUpdateRequest } from '../api/in_instantwin_conversations/types/conversation_request';
 import { ConversationEntity, PaginationInfo } from '../api/in_instantwin_conversations/types/conversation_entities';
 import { ConversationValidator } from '../api/in_instantwin_conversations/utils/conversation_validator';

@@ -106,11 +106,11 @@ export class ResponseHelper {
     });
   }
 
-  static notFound(res: Response, message?: string, code?: string): Response<ApiResponse> {
+  static notFound(res: Response, message?: string, details?: any): Response<ApiResponse> {
     return res.status(404).json({
       success: false,
       message: message || 'リソースが見つかりません',
-      error: code ? { code } : undefined,
+      error: details,
     });
   }
 

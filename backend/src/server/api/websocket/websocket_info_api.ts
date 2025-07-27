@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { WebSocketService } from '../../services/websocket_service';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 
 export const getWebSocketInfoApi = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -18,7 +18,7 @@ export const getWebSocketInfoApi = async (req: Request, res: Response): Promise<
     ResponseHelper.success(res, response, 'WebSocket情報を取得しました');
   } catch (error) {
     console.error('Error in getWebSocketInfoApi:', error);
-    ResponseHelper.internalServerError(res, 'WebSocket情報の取得に失敗しました');
+    ResponseHelper.internalError(res, 'WebSocket情報の取得に失敗しました');
   }
 };
 
@@ -45,7 +45,7 @@ export const getUserConnectionStatusApi = async (req: Request, res: Response): P
     ResponseHelper.success(res, response, 'ユーザー接続状態を取得しました');
   } catch (error) {
     console.error('Error in getUserConnectionStatusApi:', error);
-    ResponseHelper.internalServerError(res, 'ユーザー接続状態の取得に失敗しました');
+    ResponseHelper.internalError(res, 'ユーザー接続状態の取得に失敗しました');
   }
 };
 
@@ -84,6 +84,6 @@ export const sendBroadcastMessageApi = async (req: Request, res: Response): Prom
     ResponseHelper.success(res, null, 'メッセージが正常に送信されました');
   } catch (error) {
     console.error('Error in sendBroadcastMessageApi:', error);
-    ResponseHelper.internalServerError(res, 'メッセージの送信に失敗しました');
+    ResponseHelper.internalError(res, 'メッセージの送信に失敗しました');
   }
 };

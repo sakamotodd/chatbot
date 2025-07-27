@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { InInstantwinSelectOptionService } from '../../services/in_instantwin_select_option_service';
+import { InInstantwinMessageSelectOptionService } from '../../services/in_instantwin_select_option_service';
 import { SELECT_OPTION_CONSTANTS } from './utils/select_option_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { SelectOptionCreateRequest } from './types/select_option_request';
 import { SelectOptionDetailResponse } from './types/select_option_response';
 
@@ -9,7 +9,7 @@ export const postInInstantwinSelectOptionApi = async (req: Request, res: Respons
   try {
     const selectOptionData: SelectOptionCreateRequest = req.body;
 
-    const selectOption = await InInstantwinSelectOptionService.createSelectOption(selectOptionData);
+    const selectOption = await InInstantwinMessageSelectOptionService.createSelectOption(selectOptionData);
 
     const response: SelectOptionDetailResponse = {
       in_instantwin_select_option: {
@@ -37,10 +37,10 @@ export const postInInstantwinSelectOptionApi = async (req: Request, res: Respons
       } else if (error.message.startsWith(SELECT_OPTION_CONSTANTS.ERROR_CODES.DUPLICATE_VALUE)) {
         ResponseHelper.badRequest(res, 'この値は既に使用されています');
       } else {
-        ResponseHelper.internalServerError(res, '選択肢の作成に失敗しました');
+        ResponseHelper.internalError(res, '選択肢の作成に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, '選択肢の作成に失敗しました');
+      ResponseHelper.internalError(res, '選択肢の作成に失敗しました');
     }
   }
 };

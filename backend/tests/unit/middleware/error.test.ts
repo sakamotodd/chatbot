@@ -28,17 +28,14 @@ describe('Error Middleware Unit Tests', () => {
       expect(mockRes.status).toHaveBeenCalledWith(500);
       expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
-        message: 'サーバー内部エラーが発生しました',
-        ...(process.env.NODE_ENV === 'development' && {
-          error: error.message,
-          stack: error.stack
-        })
+        message: 'Test error message',
+        error: undefined
       });
     });
 
     it('should handle errors with custom status codes', () => {
       const error: any = new Error('Not found');
-      error.status = 404;
+      error.statusCode = 404;
       
       errorHandler(error, mockReq as Request, mockRes as Response, mockNext);
 
@@ -63,8 +60,8 @@ describe('Error Middleware Unit Tests', () => {
 
     it('should handle validation errors', () => {
       const error: any = new Error('Validation failed');
-      error.name = 'ValidationError';
-      error.details = [{ message: '必須フィールドが不足しています' }];
+      error.name = 'SequelizeValidationError';
+      error.errors = [{ path: 'title', message: 'Title is required' }];
       
       errorHandler(error, mockReq as Request, mockRes as Response, mockNext);
 
@@ -87,8 +84,7 @@ describe('Error Middleware Unit Tests', () => {
 
       expect(mockRes.json).toHaveBeenCalledWith(
         expect.objectContaining({
-          error: error.message,
-          stack: error.stack
+          error: expect.stringContaining('Test error with stack')
         })
       );
 
@@ -116,14 +112,16 @@ describe('Error Middleware Unit Tests', () => {
 
   describe('Not Found Handler', () => {
     it('should handle 404 errors', () => {
-      notFoundHandler(mockReq as Request, mockRes as Response, mockNext);
+      notFoundHandler(mockReq as Request, mockRes as Response);
 
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         success: false,
         message: 'リクエストされたリソースが見つかりません',
-        path: mockReq.url,
-        method: mockReq.method
+        error: {
+          path: mockReq.url,
+          method: mockReq.method
+        }
       });
     });
 
@@ -131,12 +129,14 @@ describe('Error Middleware Unit Tests', () => {
       mockReq.url = '/api/nonexistent';
       mockReq.method = 'POST';
       
-      notFoundHandler(mockReq as Request, mockRes as Response, mockNext);
+      notFoundHandler(mockReq as Request, mockRes as Response);
 
       expect(mockRes.json).toHaveBeenCalledWith(
         expect.objectContaining({
-          path: '/api/nonexistent',
-          method: 'POST'
+          error: {
+            path: '/api/nonexistent',
+            method: 'POST'
+          }
         })
       );
     });

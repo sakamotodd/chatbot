@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { InInstantwinSelectOptionService } from '../../services/in_instantwin_select_option_service';
+import { InInstantwinMessageSelectOptionService } from '../../services/in_instantwin_select_option_service';
 import { SelectOptionValidator } from './utils/select_option_validator';
 import { SELECT_OPTION_CONSTANTS } from './utils/select_option_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { SelectOptionResponse } from './types/select_option_response';
 
 export const getSelectOptionsByMessageApi = async (req: Request, res: Response): Promise<void> => {
@@ -14,7 +14,7 @@ export const getSelectOptionsByMessageApi = async (req: Request, res: Response):
       return;
     }
 
-    const selectOptions = await InInstantwinSelectOptionService.getSelectOptionsByMessageId(numericId);
+    const selectOptions = await InInstantwinMessageSelectOptionService.getSelectOptionsByMessageId(numericId);
 
     const response: { select_options: SelectOptionResponse[] } = {
       select_options: selectOptions.map(option => ({
@@ -31,6 +31,6 @@ export const getSelectOptionsByMessageApi = async (req: Request, res: Response):
     ResponseHelper.success(res, response, SELECT_OPTION_CONSTANTS.MESSAGES.SELECT_OPTIONS_RETRIEVED);
   } catch (error) {
     console.error('Error in getSelectOptionsByMessageApi:', error);
-    ResponseHelper.internalServerError(res, 'メッセージの選択肢取得に失敗しました');
+    ResponseHelper.internalError(res, 'メッセージの選択肢取得に失敗しました');
   }
 };

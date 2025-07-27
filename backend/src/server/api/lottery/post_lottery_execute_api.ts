@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { LotteryEngineService } from '../../services/lottery_engine_service';
 import { LotteryValidator } from './utils/lottery_validator';
 import { LOTTERY_CONSTANTS } from './utils/lottery_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { LotteryExecuteRequest } from './types/lottery_request';
 import { LotteryExecuteResponse } from './types/lottery_response';
 
@@ -61,10 +61,10 @@ export const postLotteryExecuteApi = async (req: Request, res: Response): Promis
       } else if (error.message.includes('No prizes available')) {
         ResponseHelper.badRequest(res, '利用可能なプライズがありません');
       } else {
-        ResponseHelper.internalServerError(res, '抽選の実行に失敗しました');
+        ResponseHelper.internalError(res, '抽選の実行に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, '抽選の実行に失敗しました');
+      ResponseHelper.internalError(res, '抽選の実行に失敗しました');
     }
   }
 };

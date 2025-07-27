@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { LotteryEngineService } from '../../services/lottery_engine_service';
 import { LotteryValidator } from './utils/lottery_validator';
 import { LOTTERY_CONSTANTS } from './utils/lottery_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { LotteryValidationRequest } from './types/lottery_request';
 import { LotteryValidationResponse } from './types/lottery_response';
 
@@ -36,6 +36,6 @@ export const postLotteryValidateApi = async (req: Request, res: Response): Promi
     ResponseHelper.success(res, response, LOTTERY_CONSTANTS.MESSAGES.LOTTERY_VALIDATION_COMPLETED);
   } catch (error) {
     console.error('Error in postLotteryValidateApi:', error);
-    ResponseHelper.internalServerError(res, '抽選資格確認に失敗しました');
+    ResponseHelper.internalError(res, '抽選資格確認に失敗しました');
   }
 };

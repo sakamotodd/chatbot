@@ -17,6 +17,7 @@ export interface CampaignCreateRequest {
   description: string
   start_date: string
   end_date: string
+  status?: CampaignStatus
 }
 
 export interface CampaignUpdateRequest {

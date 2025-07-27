@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinEdgeService } from '../../services/in_instantwin_edge_service';
 import { EdgeValidator } from './utils/edge_validator';
 import { EDGE_CONSTANTS } from './utils/edge_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { EdgeDetailResponse } from './types/edge_response';
 
 export const getInInstantwinEdgeByIdApi = async (req: Request, res: Response): Promise<void> => {
@@ -37,6 +37,6 @@ export const getInInstantwinEdgeByIdApi = async (req: Request, res: Response): P
     ResponseHelper.success(res, response, EDGE_CONSTANTS.MESSAGES.EDGE_RETRIEVED);
   } catch (error) {
     console.error('Error in getInInstantwinEdgeByIdApi:', error);
-    ResponseHelper.internalServerError(res, 'エッジの取得に失敗しました');
+    ResponseHelper.internalError(res, 'エッジの取得に失敗しました');
   }
 };

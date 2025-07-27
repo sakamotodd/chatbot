@@ -1,6 +1,6 @@
-import { InInstantwinTemplate } from '../models/in_instantwin_templates';
-import { InInstantwinNode } from '../models/in_instantwin_nodes';
-import { InInstantwinEdge } from '../models/in_instantwin_edges';
+import { InInstantwinTemplate } from '../../../database/models/in_instantwin_templates';
+import { InInstantwinNode } from '../../../database/models/in_instantwin_nodes';
+import { InInstantwinEdge } from '../../../database/models/in_instantwin_edges';
 import { FlowValidationResult, FlowValidationError, FlowValidationWarning, FlowStatistics } from '../api/flow/types/flow_request';
 import { FLOW_CONSTANTS } from '../api/flow/utils/flow_constants';
 

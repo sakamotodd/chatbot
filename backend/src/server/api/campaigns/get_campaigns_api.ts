@@ -16,30 +16,33 @@ export const getCampaigns = async (
   try {
     const {
       page = 1,
-      limit = 20,
-      search,
+      limit = 10,
       status,
-      sortBy = 'created',
-      sortOrder = 'desc',
+      sort = 'created_desc',
     } = req.query;
 
-    const result = await CampaignService.getAllCampaigns({
+    const result = await CampaignService.getCampaigns({
       page: Number(page),
       limit: Number(limit),
-      search,
       status,
-      sortBy,
-      sortOrder,
+      sort,
     });
 
-    ResponseHelper.paginated(
-      res,
-      result.campaigns,
-      result.pagination.page,
-      result.pagination.limit,
-      result.pagination.total,
-      'キャンペーン一覧を取得しました'
-    );
+    // ドキュメント仕様に合わせたレスポンス形式
+    res.status(200).json({
+      success: true,
+      data: {
+        campaigns: result.campaigns,
+        pagination: {
+          current_page: result.pagination.page,
+          total_pages: result.pagination.totalPages,
+          total_count: result.pagination.total,
+          per_page: result.pagination.limit,
+          has_next: result.pagination.page < result.pagination.totalPages,
+          has_prev: result.pagination.page > 1,
+        },
+      },
+    });
   } catch (error) {
     next(error);
   }

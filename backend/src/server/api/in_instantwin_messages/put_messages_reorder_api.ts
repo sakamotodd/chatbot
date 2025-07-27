@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { InInstantwinMessageService } from '../../services/in_instantwin_message_service';
 import { MessageValidator } from './utils/message_validator';
 import { MESSAGE_CONSTANTS } from './utils/message_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { MessageResponse } from './types/message_response';
 
 interface ReorderRequest {
@@ -60,10 +60,10 @@ export const putMessagesReorderApi = async (req: Request, res: Response): Promis
       } else if (error.message.startsWith(MESSAGE_CONSTANTS.ERROR_CODES.MESSAGE_NOT_FOUND)) {
         ResponseHelper.notFound(res, 'メッセージが見つかりません');
       } else {
-        ResponseHelper.internalServerError(res, 'メッセージの順序更新に失敗しました');
+        ResponseHelper.internalError(res, 'メッセージの順序更新に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, 'メッセージの順序更新に失敗しました');
+      ResponseHelper.internalError(res, 'メッセージの順序更新に失敗しました');
     }
   }
 };

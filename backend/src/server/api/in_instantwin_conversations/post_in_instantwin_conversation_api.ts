@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { InInstantwinConversationService } from '../../services/in_instantwin_conversation_service';
 import { CONVERSATION_CONSTANTS } from './utils/conversation_constants';
-import { ResponseHelper } from '../response_helper';
+import { ResponseHelper } from '../../utils/response';
 import { ConversationCreateRequest } from './types/conversation_request';
 import { ConversationDetailResponse } from './types/conversation_response';
 
@@ -38,10 +38,10 @@ export const postInInstantwinConversationApi = async (req: Request, res: Respons
       } else if (error.message.startsWith(CONVERSATION_CONSTANTS.ERROR_CODES.NODE_NOT_FOUND)) {
         ResponseHelper.notFound(res, 'ノードが見つかりません');
       } else {
-        ResponseHelper.internalServerError(res, '会話の作成に失敗しました');
+        ResponseHelper.internalError(res, '会話の作成に失敗しました');
       }
     } else {
-      ResponseHelper.internalServerError(res, '会話の作成に失敗しました');
+      ResponseHelper.internalError(res, '会話の作成に失敗しました');
     }
   }
 };

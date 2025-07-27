@@ -9,6 +9,12 @@ interface InInstantwinPrizeAttributes {
   winner_count: number;
   winning_rate_change_type: number;
   winning_rate: number;
+  win_probability?: number;
+  value?: string;
+  stock_quantity?: number;
+  daily_limit?: number;
+  type?: string;
+  image_url?: string;
   daily_winner_count?: number;
   is_daily_lottery: boolean;
   lottery_count_per_minute?: number;
@@ -28,6 +34,12 @@ class InInstantwinPrize extends Model<InInstantwinPrizeAttributes, InInstantwinP
   public winner_count!: number;
   public winning_rate_change_type!: number;
   public winning_rate!: number;
+  public win_probability?: number;
+  public value?: string;
+  public stock_quantity?: number;
+  public daily_limit?: number;
+  public type?: string;
+  public image_url?: string;
   public daily_winner_count?: number;
   public is_daily_lottery!: boolean;
   public lottery_count_per_minute?: number;
@@ -83,6 +95,30 @@ export function createInInstantwinPrizeModel(sequelize: Sequelize, dataTypes: ty
         type: dataTypes.DECIMAL(10, 4),
         allowNull: false,
         defaultValue: 0.0000,
+      },
+      win_probability: {
+        type: dataTypes.DECIMAL(10, 4),
+        allowNull: true,
+      },
+      value: {
+        type: dataTypes.STRING(255),
+        allowNull: true,
+      },
+      stock_quantity: {
+        type: dataTypes.INTEGER,
+        allowNull: true,
+      },
+      daily_limit: {
+        type: dataTypes.INTEGER,
+        allowNull: true,
+      },
+      type: {
+        type: dataTypes.STRING(50),
+        allowNull: true,
+      },
+      image_url: {
+        type: dataTypes.STRING(500),
+        allowNull: true,
       },
       daily_winner_count: {
         type: dataTypes.INTEGER,
